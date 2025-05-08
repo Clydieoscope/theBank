@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/index.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        body {
+            background-color: #337ab7;
+            height: 85vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-offset-4 col-lg-4 col-md-offset-2 col-md-8 col-xs-12">
+                <h1 class="text-center" style="color: white;"><strong><sup>The</sup>Bank </strong><span class="glyphicon glyphicon-th" style="transform: scale(0.9, 0.9);"></span></h1>
+                <div class="panel panel-default">
+                    
+                    <div class="panel-body" style="padding: 30px;">
+                        <h3 class="text-center">Log in</h3>
+                        <p class="text-center">Welcome. Please enter your credentials</p>
+                        <form id="login-form" style="margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="you@example.com" required value="alice@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="••••••••" required value="pass1234">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block btn-md">
+                                <strong>Log in</strong>
+                            </button>
+                        </form>
+                        
+                        <div id="alert"></div>
+                        
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+</html>

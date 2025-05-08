@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Transfer Funds</title>
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+		/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#"><small>the </small>Bank <span class="glyphicon glyphicon-th"></span></a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="dashboard.html">Home</a></li>
+                    <li class="active"><a href="#">Banking</a></li>
+                    <li><a href="loans.html">Loans</a></li>
+				</ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Clyde Joshua Delgado <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="profile.html"><span class="glyphicon glyphicon-user"></span> <span id="user_fullname">Profile</span></a></li>
+                            <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+			</div>
+		</nav>
+
+		<div class="container main">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <h2>Transfer Funds</h2>
+                    <form class="form-horizontal" id="transfer-funds-form">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="from-account">From:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="from-account">
+                                    <option value="1">Savings (0001) $1,500.00</option>
+                                    <option value="2">Checking (0002) $500.00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="minimum-input">To:</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="to-account">
+                                    <optgroup label="Your accounts">
+                                        <option value="1">Savings (0001) $1,500.00</option>
+                                        <option value="2">Checking (0002) $500.00</option>
+                                    </optgroup>
+                                    <optgroup label="External accounts">
+                                        <option value="">enter account number</option>
+                                    </optgroup>
+                                </select>
+                                <input style="margin-top: 15px;" type="text" class="form-control" id="external-account" placeholder="4-digit account number">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="amount">Amount:</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="amount" placeholder="ex. 1000">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">Transfer Funds</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+	</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Loan</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+        <script src="js/util.js"></script>
+		<script src="js/loan.js"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#"><small>the </small>Bank <span class="glyphicon glyphicon-th"></span></a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="dashboard.html">Home</a></li>
+                    <li><a href="banking.html">Banking</a></li>
+                    <li class="active"><a href="#">Loans</a></li>
+				</ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span id="user_name"></span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="profile.html"><span class="glyphicon glyphicon-user"></span> <span id="user_fullname">Profile</span></a></li>
+                            <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+			</div>
+		</nav>
+
+		<div class="container main">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="jumbotron">
+                                        
+                        <h2 id="loan_type"></h2>
+                        <h1>
+                            <strong id="total_amount"></strong>
+                        </h1>
+                        <h4><span class="glyphicon glyphicon-info-sign"></span> Total outstanding balance</h4>
+                    </div>
+                    
+                    
+                    <div class="panel-group">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <h2 class="col-sm-10">Transactions</h2>
+                                <h3><a class="col-sm-2 btn btn-default" data-toggle="collapse" href="#filter-panel">Filter</a></h3>
+                            </div>
+                        </div>
+                        
+                        <div id="filter-panel" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="container-fluid">
+                                    <form class="form-horizontal" id="filter_form">
+                                        <!-- <div class="form-group">
+                                            <label class="control-label col-sm-2" for="date_range">Date
+                                                Range:</label>
+                                            <div class="col-sm-10">
+                                                <select class="form-control" id="date_range">
+                                                    <option value="none">All</option>
+                                                    <option value="past_30">Past 30 days</option>
+                                                    <option value="past_60">Past 60 days</option>
+                                                    <option value="past_90">Past 90 days</option>
+                                                    <option value="this_year">This year</option>
+                                                    <option value="prev_year">Last year</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" for="min">Start</label>
+                                            <div class="col-sm-10">
+                                                <input type="date" class="form-control" id="start">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" for="min">End</label>
+                                            <div class="col-sm-10">
+                                                <input type="date" class="form-control" id="end">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" for="min">Minimum
+                                                amount</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" id="min"
+                                                        placeholder="ex. 100">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2" for="max">Maximum
+                                                amount</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" id="max"
+                                                        placeholder="ex. 1000">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-5">
+                                                <button type="button" class="btn btn-default btn-block" id="reset">Reset</button>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <button type="submit" class="btn btn-primary btn-block">Filter Transactions</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="table" id="transaction_table">
+                            <tr>
+                                <th>Payment Date</th>
+                                <th>Amount</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    
+                <div class="col-sm-4">
+                    <div class="container-fluid">
+                        <h3>Actions</h3>
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="transferfunds.html"><span class="glyphicon glyphicon-transfer"></span> Transfer funds</a></li>
+                            <li class="list-group-item"><a href="applyloan.html"><span class="glyphicon glyphicon-usd"></span> Apply for loan</a></li>
+                            <li class="list-group-item"><a href="payloan.html"><span class="glyphicon glyphicon-credit-card"></span> Pay for loan</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+	</body>
+</html>

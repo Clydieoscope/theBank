@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Dashboard</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="js/util.js"></script>
+		<script src="js/dashboard.js"></script>
+	</head>
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#"><small>the </small>Bank <span class="glyphicon glyphicon-th"></span></a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+                    <li><a href="app/banking">Banking</a></li>
+                    <li><a href="app/loans">Loans</a></li>
+				</ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#"><span id="user_name"></span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="app/profile"><span class="glyphicon glyphicon-user"></span> <span id="user_fullname">Profile</span></a></li>
+                            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+			</div>
+		</nav>
+
+		<div class="container main">
+            <div class="jumbotron">
+                <h2>Welcome, <span id="user_firstname"></span></h2>
+                <h1>
+                    <strong><sup>$</sup><span class="total_account_balance"></span></strong>
+                </h1>
+                <h4><span class="glyphicon glyphicon-info-sign"></span> Total available balance</h4>
+            </div>
+            
+			<div class="container-fluid">
+				<!-- Bank Accounts -->
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="panel-group">
+							<div class="panel panel-default account">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" href="#account_container">
+											Banking <small>$<span class="total_account_balance"></span></small>
+										</a>
+									</h4>
+								</div>
+								<div id="account_container" class="panel-collapse collapse in" aria-expanded="true">
+									<ul class="list-group" id="account_list"></ul>
+									<!-- <div class="panel-footer">Footer</div> -->
+								</div>
+							</div>
+						</div>
+
+						<!-- Loans -->
+						<div class="panel-group">
+							<div class="panel panel-default loan">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a
+											data-toggle="collapse"
+											href="#loan_container"
+											>Loans
+											<small>$<span class="total_loan_balance"></span></small></a>
+									</h4>
+								</div>
+								<div
+									id="loan_container"
+									class="panel-collapse collapse in"
+									aria-expanded="true">
+									<ul class="list-group" id="loan_list"></ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+                        <!-- <h3></h3> -->
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-transfer"></span> Transfer funds</a></li>
+                            <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-usd"></span> Apply for loan</a></li>
+                            <li class="list-group-item"><a href="#"><span class="glyphicon glyphicon-credit-card"></span> Pay for loan</a></li>
+                          </ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
