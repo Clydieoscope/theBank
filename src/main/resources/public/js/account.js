@@ -80,7 +80,7 @@ async function loadInformation() {
             createElement("td", {}, capitalize(transaction.type)),
             createElement("td", 
                 {class: (isIncome(transaction.type)) ? 'text-success' : 'text-danger'}, 
-                (isIncome(DEPOSIT) ? '+' : '-') + usd(transaction.amount)),
+                (isIncome(transaction.type) ? '+' : '-') + usd(transaction.amount)),
             createElement("td", {}, usd(previousBalance)),
         );
 

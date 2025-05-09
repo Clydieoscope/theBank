@@ -15,8 +15,21 @@ document.addEventListener('DOMContentLoaded', function() {
             amount: document.getElementById('amount').value,
         };
 
-        console.log(details);
-        processTransfer(details);
+        if (details.from == details.to) {
+            const alertHTML = createElement(
+                "div", { class: "alert alert-warning alert-dismissible" },
+                createElement("a", { href: "#", class: "close", 'data-dismiss':"alert", 'aria-label':"close"}, 'x'),
+                createElement("strong", {}, "Wait!"),
+                createElement("span", {}, " You can't transfer to the same account."),
+            );
+
+            const alter = document.getElementById('alert');
+            alert.innerHTML = '';
+            alter.appendChild(alertHTML);
+        } else {
+            processTransfer(details);
+        }
+
     });
 
     const toSelect = document.getElementById('to');

@@ -16,8 +16,6 @@ public class BankApp {
         port(4567);
         staticFiles.location("/public");
         Database.connect();
-        CustomerService customerService = new CustomerService(Database.getConnection());
-        Gson gson = new Gson();
         CustomerController.setupRoutes(Database.getConnection());
         AccountController.setupRoutes(Database.getConnection());
         LoanController.setupRoutes(Database.getConnection());
@@ -31,8 +29,10 @@ public class BankApp {
         });
 
         post("/login", (request, response) -> {
-            LoginRequest login = gson.fromJson(request.body(), LoginRequest.class);
+            LoginRequest login = new Gson().fromJson(request.body(), LoginRequest.class);
+            CustomerService customerService = new CustomerService(Database.getConnection());
             Customer customer = customerService.authenticate(login);
+            
             if (customer != null) {
                 Session session = request.session(true);
                 session.attribute("user", customer);
@@ -42,13 +42,13 @@ public class BankApp {
                 response.status(401);
             }
 
-            return null;
+            return response;
         });
 
         get("/user", (request, response) -> {
             response.type("application/json");
             Customer user = request.session().attribute("user");
-            return gson.toJson(user);
+            return new Gson().toJson(user);
         });
 
     }
