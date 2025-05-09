@@ -18,7 +18,7 @@ async function loadInformation() {
                 createElement("div", { class: "container-fluid" },
                     createElement("div", { class: "row" },
                         createElement("strong", {}, capitalize(loan.type) + " (" + pad(loan.id) + ")"),
-                        createElement("span", { class: "float-right" }, usd(loan.amount))
+                        createElement("span", { class: "float-right" }, usd(loan.balance))
                     ),
                     createElement("div", { class: "row" },
                         createElement("i", {}, "Interest rate " + loan.rate + "%"),
@@ -28,7 +28,7 @@ async function loadInformation() {
             )
         );
         loan_list.appendChild(loanHTML);
-        total_loan_balance += loan.amount;
+        total_loan_balance += loan.balance;
     });
 
     document.querySelectorAll('.total_loan_balance').forEach( e => e.innerText = decimal(total_loan_balance));

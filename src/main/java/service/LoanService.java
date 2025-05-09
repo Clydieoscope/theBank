@@ -2,9 +2,11 @@ package service;
 
 import dao.LoanDao;
 import model.Loan;
+import model.LoanApplication;
 import model.LoanPayment;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class LoanService {
@@ -24,7 +26,15 @@ public class LoanService {
         return loanDao.getLoan(conn, id);
     }
 
-    public Boolean processPayment(LoanPayment payment) {
-        return loanDao.processPayment(conn, payment);
+    public Boolean processPayment(int userID, LoanPayment payment) throws SQLException {
+        return loanDao.processPayment(conn, userID, payment);
+    }
+
+    public Boolean processApplication(int userID, LoanApplication application) throws SQLException {
+        return loanDao.processApplication(conn, userID, application);
+    }
+
+    public Boolean deleteLoan(int userID, int loanID) {
+        return loanDao.deleteLoan(conn, userID, loanID);
     }
 }

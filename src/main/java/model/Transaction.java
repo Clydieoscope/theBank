@@ -13,56 +13,58 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(int id, String type, Integer AccountId, Date date, double amount) {
+    public Transaction(int id, String type, Integer AccountId, Timestamp timestamp, double amount) {
         this.id = id;
         this.type = type;
         this.AccountId = AccountId;
         this.amount = amount;
-        this.date = date;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public Integer getAccountId() {
-        return AccountId;
-    }
-
-    public double getAmount() {
-        return amount;
+        this.timestamp = timestamp;
+        this.date = new Date(timestamp.getTime());
     }
 
     public Timestamp getTimestamp() {
         return timestamp;
     }
 
-    public Date getDate() {
-        return date;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+        this.date = new Date(timestamp.getTime());
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setAccountId(Integer AccountId) {
-        this.AccountId = AccountId;
+    public double getAmount() {
+        return amount;
     }
 
     public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public Integer getAccountId() {
+        return AccountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        AccountId = accountId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public void setDate(Date date) {

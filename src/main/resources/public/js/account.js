@@ -78,11 +78,13 @@ async function loadInformation() {
         const transactionHTML = createElement("tr", {},
             createElement("td", {}, transaction.date),
             createElement("td", {}, capitalize(transaction.type)),
-            createElement("td", {class: (transaction.type === "DEPOSIT") ? 'text-success' : 'text-danger'}, ((transaction.type === "DEPOSIT") ? '+' : '-') + usd(transaction.amount)),
+            createElement("td", 
+                {class: (isIncome(transaction.type)) ? 'text-success' : 'text-danger'}, 
+                (isIncome(DEPOSIT) ? '+' : '-') + usd(transaction.amount)),
             createElement("td", {}, usd(previousBalance)),
         );
 
-        if (transaction.type === "DEPOSIT") {
+        if (isIncome(transaction.type)) {
             previousBalance -= transaction.amount;
         } else {
             previousBalance += transaction.amount;

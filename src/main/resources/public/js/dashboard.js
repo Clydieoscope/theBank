@@ -10,6 +10,7 @@ async function loadInformation() {
     console.log(loans);
 
     document.getElementById('user_name').innerText = user.firstName + ' ' + user.lastName;
+    document.getElementById('user_firstname').innerText = user.firstName;
     
     const account_list = document.querySelector('#account_list');
     total_account_balance = 0;
@@ -30,11 +31,11 @@ async function loadInformation() {
     loans.data.forEach(loan => {
         const loanHTML = createElement("li", {class:'list-group-item'},
             createElement('a', {href: '/loan.html?id=' + loan.id}, capitalize(loan.type) + ' (' + pad(loan.id) + ')'),
-            createElement('small', {}, usd(loan.amount))
+            createElement('small', {}, usd(loan.balance))
         );
 
         loan_list.appendChild(loanHTML); 
-        total_loan_balance += loan.amount;
+        total_loan_balance += loan.balance;
     });
     
     document.querySelectorAll('.total_loan_balance').forEach( e => e.innerText = decimal(total_loan_balance));

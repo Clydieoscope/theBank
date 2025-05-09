@@ -3,12 +3,11 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Transfer Funds</title>
-		<link
-			rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-		/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/transferfunds.js"></script>
 		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
@@ -19,15 +18,15 @@
 				</div>
 				<ul class="nav navbar-nav">
 					<li><a href="dashboard.html">Home</a></li>
-                    <li class="active"><a href="#">Banking</a></li>
+                    <li><a href="banking.html">Banking</a></li>
                     <li><a href="loans.html">Loans</a></li>
 				</ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Clyde Joshua Delgado <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span id="user_name"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="profile.html"><span class="glyphicon glyphicon-user"></span> <span id="user_fullname">Profile</span></a></li>
-                            <li><a href="index.html"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -39,13 +38,11 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-8">
                     <h2>Transfer Funds</h2>
-                    <form class="form-horizontal" id="transfer-funds-form">
+                    <form class="form-horizontal" id="transfer_form">
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="from-account">From:</label>
+                            <label class="control-label col-sm-2" for="from">From:</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="from-account">
-                                    <option value="1">Savings (0001) $1,500.00</option>
-                                    <option value="2">Checking (0002) $500.00</option>
+                                <select class="form-control" id="from">
                                 </select>
                             </div>
                         </div>
@@ -53,16 +50,14 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2" for="minimum-input">To:</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="to-account">
-                                    <optgroup label="Your accounts">
-                                        <option value="1">Savings (0001) $1,500.00</option>
-                                        <option value="2">Checking (0002) $500.00</option>
+                                <select class="form-control" id="to">
+                                    <optgroup label="Your accounts" id="to_option">
                                     </optgroup>
                                     <optgroup label="External accounts">
-                                        <option value="">enter account number</option>
+                                        <option value="-1">Enter account number</option>
                                     </optgroup>
                                 </select>
-                                <input style="margin-top: 15px;" type="text" class="form-control" id="external-account" placeholder="4-digit account number">
+                                <input style="margin-top: 15px;" type="number" class="form-control" id="acc_number" placeholder="4-digit account number">
                             </div>
                         </div>
 
@@ -79,6 +74,7 @@
                             </div>
                         </div>
                     </form>
+                    <div id="alert"></div>
                 </div>
             </div>
         </div>

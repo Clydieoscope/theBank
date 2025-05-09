@@ -28,6 +28,10 @@ function pad(num) {
     return num.toString().padStart(4, '0');
 }
 
+function formatPhone(phone) {
+  return phone.replace(/(\d{3})(\d{3})(\d{4})/, '($1)$2-$3');
+}
+
 function createElement(tag, attrs = {}, ...children) {
     const el = document.createElement(tag);
     for (const [key, value] of Object.entries(attrs)) {
@@ -43,5 +47,28 @@ function createElement(tag, attrs = {}, ...children) {
         el.append(child instanceof Node ? child : document.createTextNode(child));
     }
     return el;
+}
+
+function isIncome(transaction) {
+    const income = ['DEPOSIT', 'RECEIVED']
+    if (income.some(type => type.toLowerCase() === transaction.toLowerCase())) {
+        return true;
+    }
+
+    return false;
+}
+
+function calculateLoanPayment(principal, interestRate, term) {
+    // get monthly interest rate
+    const monthlyInterestRate = interestRate / 100 / 12;
+    
+    // calcualte number of months
+    const totalPayments = term * 12;
+
+    // amortization formula to calculate the monthly payment
+    const monthlyPayment = (principal * monthlyInterestRate) / 
+                           (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
+                           
+    return monthlyPayment;
 }
 

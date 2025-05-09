@@ -4,17 +4,17 @@ public class Customer {
     private int id;
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+    private String phone;
     private String address;
     private String email;
 
     public Customer() {}
 
-    public Customer(int id, String firstName, String lastName, String phoneNumber, String address, String email) {
+    public Customer(int id, String firstName, String lastName, String phone, String address, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
         this.address = address;
         this.email = email;
     }
@@ -31,8 +31,8 @@ public class Customer {
         return lastName;
     }
 
-    public String getphoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
     public String getAddress() {
@@ -55,8 +55,8 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public void setphoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setphone(String phone) {
+        this.phone = phone;
     }
 
     public void setAddress(String address) {

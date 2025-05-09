@@ -19,3 +19,12 @@ sup {
     top: -0.75em;
     font-size: 50%;
 }
+
+.jumbotron {
+    background-color: #357fc0;
+    color: #fff;
+}
+
+.jumbotron small {
+    color: #f2f7ff!important;
+}

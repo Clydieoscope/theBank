@@ -3,9 +3,10 @@ package controller;
 import com.google.gson.Gson;
 import model.Customer;
 import model.Transaction;
+import model.TransferRequest;
 import service.TransactionService;
 import java.sql.Connection;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -21,23 +22,14 @@ public class TransactionController {
             get("/:id", (request, response) -> {
                 response.type("application/json");
 
-                String param_min = request.queryParams("min");
-                String param_max = request.queryParams("max");
-                String param_start = request.queryParams("start");
-                String param_end = request.queryParams("end");
-
                 int accountID = Integer.parseInt(request.params(":id"));
                 Customer user = request.session().attribute("user");
 
-                System.out.println(param_min + " " + param_min + " " + param_start + " " + param_end);
-
-                Date start = param_start != null ? Date.valueOf(param_start) : Date.valueOf(LocalDate.of(2000, 1, 1));
-                Date end = param_end != null ? Date.valueOf(param_end) : Date.valueOf(LocalDate.now());
-
-                System.out.println(start + " " + end);
-
-                double min = param_min != null ? Double.parseDouble(param_min) : 0;
-                double max = param_max != null ? Double.parseDouble(param_max) : 99999999;
+                // format parameters for compatibility
+                Timestamp start = formatDate(request.queryParams("start"), "00:00:00.0", LocalDateTime.of(2000, 1, 1, 0, 0));
+                Timestamp end = formatDate(request.queryParams("end"), "23:59:00.0", LocalDateTime.now());
+                double min = formatDouble(request.queryParams("min"), 0);
+                double max = formatDouble(request.queryParams("max"), 99999999);
 
                 List<Transaction> transactions = transactionService.getTransactions(user.getId(), accountID, start, end, min, max);
 
@@ -48,24 +40,52 @@ public class TransactionController {
             get("/loan/:id", (request, response) -> {
                 response.type("application/json");
 
-                String param_min = request.queryParams("min");
-                String param_max = request.queryParams("max");
-                String param_start = request.queryParams("start");
-                String param_end = request.queryParams("end");
-
                 int loanID = Integer.parseInt(request.params(":id"));
                 Customer user = request.session().attribute("user");
 
-                Date start = param_start != null ? Date.valueOf(param_start) : Date.valueOf(LocalDate.of(2000, 1, 1));
-                Date end = param_end != null ? Date.valueOf(param_end) : Date.valueOf(LocalDate.now());
-
-                double min = param_min != null ? Double.parseDouble(param_min) : 0;
-                double max = param_max != null ? Double.parseDouble(param_max) : 99999999;
+                // format parameters for compatibility
+                Timestamp start = formatDate(request.queryParams("start"), "00:00:00.0", LocalDateTime.of(2000, 1, 1, 0, 0));
+                Timestamp end = formatDate(request.queryParams("end"), "23:59:00.0", LocalDateTime.now());
+                double min = formatDouble(request.queryParams("min"), 0);
+                double max = formatDouble(request.queryParams("max"), 99999999);
 
                 List<Transaction> transactions = transactionService.getLoanTransactions(user.getId(), loanID, start, end, min, max);
 
                 return new Gson().toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJsonTree(transactions)));
             });
+
+            post("/transfer", (request, response) -> {
+                TransferRequest transferRequest = new Gson().fromJson(request.body(), TransferRequest.class);
+                Customer user = request.session().attribute("user");
+
+                System.out.println("Transfer Request:" +
+                        "\n- from:" + transferRequest.getFrom() +
+                        "\n- to:" + transferRequest.getTo() +
+                        "\n- account_number:" + transferRequest.getAccount_number() +
+                        "\n- amount: " + transferRequest.getAmount());
+
+                Boolean success = transactionService.transferFunds(user.getId(), transferRequest);
+
+                if (success) {
+                    response.status(200);
+                } else {
+                    response.status(401);
+                }
+
+                return response;
+            });
         });
+    }
+
+    private static Timestamp formatDate(String date, String time, LocalDateTime defaultValue) {
+        if (date == null) return Timestamp.valueOf(defaultValue);
+
+        return Timestamp.valueOf(date + " " + time);
+    }
+
+    private static double formatDouble(String value, double defaultValue) {
+        if (value == null) return defaultValue;
+
+        return Double.parseDouble(value);
     }
 }

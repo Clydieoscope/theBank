@@ -1,25 +1,25 @@
 package dao;
 
 import model.Transaction;
+import model.TransferRequest;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 public class TransactionDao {
 
-    public List<Transaction> getTransactions(Connection conn, int userID, int accountID, Date start, Date end, double min, double max) {
+    public List<Transaction> getTransactions(Connection conn, int userID, int accountID, Timestamp start, Timestamp end, double min, double max) {
         List<Transaction> transactions = new ArrayList<>();
         String sql = "SELECT * FROM Transactions t INNER JOIN Accounts a ON t.accountID = a.accountID WHERE a.customerID = ? AND t.accountID = ? " +
-                "AND t.date BETWEEN ? AND ? AND t.amount BETWEEN ? AND ? ORDER BY t.date DESC";
+                "AND t.timestamp BETWEEN ? AND ? AND t.amount BETWEEN ? AND ? ORDER BY t.timestamp DESC";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, userID);
             pstmt.setInt(2, accountID);
-            pstmt.setDate(3, start);
-            pstmt.setDate(4, end);
+            pstmt.setTimestamp(3, start);
+            pstmt.setTimestamp(4, end);
             pstmt.setDouble(5, min);
             pstmt.setDouble(6, max);
 
@@ -30,7 +30,7 @@ public class TransactionDao {
                         rs.getInt("transactionID"),
                         rs.getString("transactionType"),
                         rs.getInt("accountID"),
-                        rs.getDate("date"),
+                        rs.getTimestamp("timestamp"),
                         rs.getDouble("amount")
                 ));
             }
@@ -40,20 +40,20 @@ public class TransactionDao {
         return transactions;
     }
 
-    public List<Transaction> getLoanTransactions(Connection conn, int userID, int loanID, Date start, Date end, double min, double max) {
+    public List<Transaction> getLoanTransactions(Connection conn, int userID, int loanID, Timestamp start, Timestamp end, double min, double max) {
         List<Transaction> transactions = new ArrayList<>();
         String sql = "SELECT * FROM Transactions t " +
                 "INNER JOIN LoanPayments p ON t.transactionID = p.transactionID " +
                 "INNER JOIN Loans l ON l.loanID = p.loanID " +
                 "WHERE l.customerID = ? AND p.loanID = ? " +
-                "AND t.date BETWEEN ? AND ? AND t.amount BETWEEN ? AND ? ORDER BY t.date DESC";
+                "AND t.timestamp BETWEEN ? AND ? AND t.amount BETWEEN ? AND ? ORDER BY t.timestamp DESC";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, userID);
             pstmt.setInt(2, loanID);
-            pstmt.setDate(3, start);
-            pstmt.setDate(4, end);
+            pstmt.setTimestamp(3, start);
+            pstmt.setTimestamp(4, end);
             pstmt.setDouble(5, min);
             pstmt.setDouble(6, max);
 
@@ -62,7 +62,7 @@ public class TransactionDao {
             while (rs.next()) {
                 Transaction t = new Transaction();
                 t.setType(rs.getString("transactionType"));
-                t.setDate(rs.getDate("date"));
+                t.setTimestamp(rs.getTimestamp("timestamp"));
                 t.setAmount(rs.getDouble("amount"));
 
                 transactions.add(t);
@@ -71,6 +71,62 @@ public class TransactionDao {
             e.printStackTrace();
         }
         return transactions;
+    }
+
+    public Boolean transferFunds(Connection conn, int userID, TransferRequest transferRequest) throws SQLException {
+        try {
+            conn.setAutoCommit(false);
+            System.out.println("acc_number: " + transferRequest.getAccount_number());
+            System.out.println("receiver: " + transferRequest.getTo());
+            int receiver = (transferRequest.getTo() == -1) ? transferRequest.getAccount_number() : transferRequest.getTo();
+            int sender = transferRequest.getFrom();
+            double amount = transferRequest.getAmount();
+
+            PreparedStatement updateSender = conn.prepareStatement(
+                    "UPDATE Accounts SET balance = balance - ? WHERE accountID = ? AND customerID = ?"
+            );
+            updateSender.setDouble(1, amount);
+            updateSender.setInt(2, sender);
+            updateSender.setInt(3, userID);
+
+            updateSender.executeUpdate();
+
+            PreparedStatement updateReceiver = conn.prepareStatement(
+                    "UPDATE Accounts SET balance = balance + ? WHERE accountID = ?"
+            );
+            updateReceiver.setDouble(1, amount);
+            updateReceiver.setInt(2, receiver);
+
+            updateReceiver.executeUpdate();
+
+            PreparedStatement addSentTransaction = conn.prepareStatement(
+                    "INSERT INTO Transactions (transactionType, accountID, timestamp, amount) VALUES ('SENT', ?, CURRENT_TIMESTAMP, ?)"
+            );
+
+            addSentTransaction.setInt(1, sender);
+            addSentTransaction.setDouble(2, amount);
+
+            addSentTransaction.executeUpdate();
+
+            PreparedStatement addReceivedTransaction = conn.prepareStatement(
+                    "INSERT INTO Transactions (transactionType, accountID, timestamp, amount) VALUES ('RECEIVED', ?, CURRENT_TIMESTAMP, ?)"
+            );
+            addReceivedTransaction.setInt(1, receiver);
+            addReceivedTransaction.setDouble(2, amount);
+
+            System.out.println("Add received transaction query: " + addReceivedTransaction);
+            addReceivedTransaction.executeUpdate();
+
+            conn.commit();
+        } catch (SQLException e) {
+            conn.rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            conn.setAutoCommit(true);
+        }
+
+        return true;
     }
 
 //    public Transaction getTransaction(Connection conn, int id) {

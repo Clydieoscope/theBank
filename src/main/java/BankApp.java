@@ -37,7 +37,7 @@ public class BankApp {
                 Session session = request.session(true);
                 session.attribute("user", customer);
                 response.status(200);
-                response.redirect("/app/dashboard");
+                response.redirect("dashboard.html");
             } else {
                 response.status(401);
             }
@@ -51,29 +51,5 @@ public class BankApp {
             return gson.toJson(user);
         });
 
-        // General paths
-
-        path("/app", () -> {
-
-            get("/dashboard", (request, response) -> {
-                response.redirect("/dashboard.html");
-                return null;
-            });
-
-            get("/account/:id", (request, response) -> {
-                response.redirect("/account.html?id=" + request.queryParams("id"));
-                return null;
-            });
-
-            get("/loans", (request, response) -> {
-                response.redirect("/loans.html");
-                return null;
-            });
-
-            get("/banking", (request, response) -> {
-                response.redirect("/banking.html");
-                return null;
-            });
-        });
     }
 }
