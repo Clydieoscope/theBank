@@ -1,3 +1,13 @@
+window.addEventListener('resize', () => {
+    const width = window.innerWidth;
+
+    if (width < 768) {
+        document.querySelector('nav').classList.remove('navbar-fixed-top')
+    } else {
+        document.querySelector('nav').classList.add('navbar-fixed-top')
+    }
+});
+
 async function getData(url) {
     try {
         const response = await fetch(url);
