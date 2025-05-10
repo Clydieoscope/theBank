@@ -75,7 +75,8 @@ public class TransactionDao {
 
     public Boolean transferFunds(Connection conn, int userID, TransferRequest transferRequest) throws SQLException {
         try {
-            conn.setAutoCommit(false);
+            conn.setAutoCommit(false); // start transaction
+
             System.out.println("acc_number: " + transferRequest.getAccount_number());
             System.out.println("receiver: " + transferRequest.getTo());
             int receiver = (transferRequest.getTo() == -1) ? transferRequest.getAccount_number() : transferRequest.getTo();
@@ -117,40 +118,16 @@ public class TransactionDao {
             System.out.println("Add received transaction query: " + addReceivedTransaction);
             addReceivedTransaction.executeUpdate();
 
-            conn.commit();
+            conn.commit(); // commit transaction
         } catch (SQLException e) {
-            conn.rollback();
+            conn.rollback(); // if something goes wrong, rollback
             e.printStackTrace();
             return false;
         } finally {
-            conn.setAutoCommit(true);
+            conn.setAutoCommit(true); // always return auto commit to true. 
         }
 
         return true;
     }
-
-//    public Transaction getTransaction(Connection conn, int id) {
-//        String sql = "SELECT * FROM Transactions WHERE transactionID = ?";
-//
-//        try {
-//            PreparedStatement pstmt = conn.prepareStatement(sql);
-//            pstmt.setInt(1, id);
-//            ResultSet rs = pstmt.executeQuery();
-//
-//            if (rs.next()) {
-//                return new Transaction(
-//                        rs.getInt("transactionID"),
-//                        rs.getString("transactionType"),
-//                        rs.getInt("accountID"),
-//                        rs.getDate("datetime"),
-//                        rs.getDouble("amount")
-//                );
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
 
 }
