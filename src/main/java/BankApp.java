@@ -32,7 +32,7 @@ public class BankApp {
             LoginRequest login = new Gson().fromJson(request.body(), LoginRequest.class);
             CustomerService customerService = new CustomerService(Database.getConnection());
             Customer customer = customerService.authenticate(login);
-            
+
             if (customer != null) {
                 Session session = request.session(true);
                 session.attribute("user", customer);
